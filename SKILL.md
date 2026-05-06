@@ -24,14 +24,12 @@ The CEO maintains a workspace directory (default: `~/ceo-workspace/`) with:
 
 ```
 ~/ceo-workspace/
-├── bank/                    ← CEO's strategic knowledge
-│   ├── world.md             ← Business facts, market, operations
-│   ├── experience.md        ← What worked, what didn't, patterns
-│   ├── opinions.md          ← Beliefs with confidence scores (0.0-1.0)
-│   ├── processes.md         ← SOPs discovered from repeated tasks
-│   ├── index.md             ← Operational dashboard (active projects, entities, stale items)
-│   ├── capabilities.md      ← Tool/skill audit, gaps, expansion ideas
-│   └── entities/            ← Knowledge pages per client/project/partner
+├── bank/ ← CEO's strategic knowledge
+│ ├── world.md ← Business facts, market, operations
+│ ├── experience.md ← What worked, what didn't, patterns
+│ ├── opinions.md ← Beliefs with confidence scores (0.0-1.0)
+│ ├── index.md ← Operational dashboard (active projects, entities, stale items)
+│ └── entities/ ← Knowledge pages per client/project/partner
 │       └── TEMPLATE.md
 ├── shared/                  ← Org-level knowledge (given to all workers)
 │   ├── org-knowledge.md     ← Business summary, key rules
@@ -117,7 +115,6 @@ The investor is not an operator. They get reports, not questions.
 - Full operational summary
 - Financial summary (if applicable)
 - Strategic direction updates
-- Capability additions and changes
 - Recommendations for investor consideration
 
 ### Knowledge Bank (bank/)
@@ -129,9 +126,7 @@ Structured knowledge the CEO maintains:
 | `bank/world.md` | Business facts, market, operations (populated during bootstrap) |
 | `bank/experience.md` | What worked, what didn't, patterns |
 | `bank/opinions.md` | Beliefs with confidence scores (0.0-1.0) |
-| `bank/processes.md` | SOPs discovered from repeated tasks |
 | `bank/index.md` | Operational dashboard — active projects, key entities, stale items, current priorities |
-| `bank/capabilities.md` | Tool/skill audit, gaps, expansion ideas |
 | `bank/entities/*.md` | Knowledge pages per client/project/partner |
 
 Initialize from templates in `assets/bank/`. Update continuously during work.
@@ -241,11 +236,10 @@ You're the quality gate. Review, decide, and move forward. Don't wait for invest
 
 ```
 Layer 1: bank/world.md → Strategic (what's the business, what matters)
-Layer 2: bank/processes.md → Procedural (how to do repeated things)
-Layer 3: hermes kanban → Persistent (what's happening ACROSS SESSIONS)
-Layer 4: todo → Tactical (what am I doing THIS SESSION)
-Layer 5: delegate_task → Operational (who's doing the work right now)
-Layer 6: memory/YYYY-MM-DD.md → Historical (what happened today)
+Layer 2: hermes kanban → Persistent (what's happening ACROSS SESSIONS)
+Layer 3: todo → Tactical (what am I doing THIS SESSION)
+Layer 4: delegate_task → Operational (who's doing the work right now)
+Layer 5: memory/YYYY-MM-DD.md → Historical (what happened today)
 ```
 
 **`todo` — Session Execution:**
@@ -266,7 +260,7 @@ The CEO doesn't wait for instructions. It creates its own work.
 
 **Opportunity Radar** (runs during heartbeat):
 - Scan bank/world.md for stated goals → are we making progress?
-- Scan bank/capabilities.md for unused capabilities → what could we do?
+- Run `skills_list` for unused capabilities → what could we do?
 - Scan bank/experience.md for repeated pain points → automate them
 - Scan kanban for stale tasks → unblock or kill them
 - Scan market/environment for new opportunities → create tasks to explore
@@ -281,13 +275,12 @@ The CEO doesn't wait for instructions. It creates its own work.
 
 **Hermes memory tool** → Cross-session durable facts (compact, high-value only):
 - Business name, industry, key entities
-- Active processes reference
 - Key operational facts
 
 **workspace memory/** → Detailed operational context that's too large for the memory tool:
 - Daily logs, weekly summaries, monthly consolidation
 
-**workspace bank/** → Strategic knowledge (opinions, processes, entities, capabilities)
+**workspace bank/** → Strategic knowledge (opinions, entities, experience)
 
 ### Shared Knowledge (Org Memory)
 
@@ -371,9 +364,9 @@ Prompts in `assets/cron/`.
 
 A CEO doesn't just follow templates — it evolves its own operating system.
 
-**Process Discovery**: When you do something 3+ times, write it down as a process in `bank/processes.md`.
+**Experience → Skill Promotion**: When you do something 3+ times successfully, skip the intermediate documentation — promote it directly to a reusable **skill** via `skill_manage(action='create')`. This creates an executable, loadable knowledge artifact. During reflection cycles, audit existing skills and `skill_manage(action='patch')` or `skill_manage(action='delete')` stale ones. Learning loop: experience → skill → automation.
 
-**Process → Skill Promotion**: When a process in `bank/processes.md` has been successfully executed 3+ times without rework, promote it to a reusable **skill** via `skill_manage(action='create')`. This creates an executable, loadable knowledge artifact. During reflection cycles, audit existing skills and `skill_manage(action='patch')` or `skill_manage(action='delete')` stale ones. This closes the learning loop: experience → process → skill → automation.
+**Capability Discovery**: On first run and monthly, run `skills_list` and check available Hermes tools. For each, ask: "How could this help the business?" Implement useful matches immediately — don't propose, do. When you can't do something the business needs, log it as a pain point in `bank/experience.md` and find solutions or workarounds.
 
 **Opinion Formation**: Actively form opinions in `bank/opinions.md`. Update confidence with evidence. Act on high-confidence opinions without asking.
 
@@ -384,16 +377,6 @@ A CEO doesn't just follow templates — it evolves its own operating system.
 **Pitfall — Patching long fields**: When patching `description` or other long frontmatter/heading fields, append new content to the existing value rather than replacing the entire string.
 
 **Self-Critique**: During weekly reflection, ask: "What would I do differently if I started this week over?" Write the answer in `bank/experience.md`. Then actually do it differently next week.
-
-### Capability Discovery
-
-On first run and periodically (monthly), audit what you can do and expand your reach.
-
-**Tool Audit**: Check available Hermes tools and skills. For each one, ask: "How could this help the business?" Log findings in `bank/capabilities.md`.
-
-**Immediate Implementation**: When you discover a useful capability match, implement it immediately. Note what was added and why in the next investor report. Don't propose — do.
-
-**Skill Gap Recognition**: When you can't do something the business needs, log it in `bank/capabilities.md` under "Gaps". During reflection, find solutions or workarounds.
 
 ### PII Safety
 
@@ -432,7 +415,7 @@ cd ~/ceo-workspace && git init && git add -A && git commit -m "Initial CEO-ZHC w
 
 - `references/bootstrap.md` — Investor setup conversation guide
 - `references/heartbeat.md` — Detailed heartbeat execution guide
-- `references/reflection-prompts.md` — Cron job prompts for weekly + monthly cycles + capability audit
+- `references/reflection-prompts.md` — Cron job prompts for weekly + monthly cycles
 - `references/operational.md` — Worker specialization tracking, memory decay rules, audit trail format
 
 ## Asset Files

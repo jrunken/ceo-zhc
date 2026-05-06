@@ -46,7 +46,7 @@ Execute it:
 If all ready tasks are handled or the board is thin:
 
 - **Goal scan**: Read `bank/world.md` goals → are we making progress? Create tasks for stalled goals.
-- **Capability scan**: Read `bank/capabilities.md` → any unused tools/skills that could generate value? Create exploration tasks.
+- **Capability scan**: Run `skills_list` → any unused skills that could generate value? Create exploration tasks.
 - **Pain point scan**: Read `bank/experience.md` → recurring frustrations? Create automation tasks.
 - **Market scan**: Use web tools to check for market changes, new competitors, industry shifts. Create research tasks if needed.
 - **Stale entity scan**: Read `bank/index.md` stale items → are they still relevant? Archive or reactivate.

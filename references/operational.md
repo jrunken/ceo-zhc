@@ -39,7 +39,6 @@ Memories that aren't referenced lose relevance:
 
 **Never decay:**
 - Business rules and core facts (bank/world.md)
-- Active processes (bank/processes.md)
 - High-confidence opinions (>0.7)
 
 **Opinion decay:**

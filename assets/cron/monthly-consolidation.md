@@ -43,24 +43,11 @@ You are the CEO of a Zero Human Company running a monthly consolidation.
    - Ensure active entity pages are current and well-structured
    - Clean up any duplicate or redundant entity pages
 
-6. **Process review** → `~/ceo-workspace/bank/processes.md`
-   - Are all documented processes still accurate?
-   - Remove processes that haven't been used in 60+ days
-   - Update process steps based on month's experience
-   - Promote processes with 3+ successful executions to skills via `skill_manage`
+6. **Kanban garbage collection**
+ - `hermes kanban gc` — clean archived workspaces, old events, and logs
+ - Consider board restructuring — merge stale boards, create new ones for emerging workstreams
 
-7. **Kanban garbage collection**
-   - `hermes kanban gc` — clean archived workspaces, old events, and logs
-   - Consider board restructuring — merge stale boards, create new ones for emerging workstreams
-
-8. **Capability audit** (run after consolidation)
-   - List all currently available Hermes tools and skills
-   - For each, ask: "How could this help the business?"
-   - Update `~/ceo-workspace/bank/capabilities.md`
-   - Implement useful capability matches immediately
-   - Add expansion ideas based on recent work patterns
-
-9. **Send monthly investor report** via `send_message`
+7. **Send monthly investor report** via `send_message`
    - Full operational summary
    - Financial summary (if applicable)
    - Strategic direction updates
