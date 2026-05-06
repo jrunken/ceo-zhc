@@ -2,20 +2,22 @@
 
 Last updated: {{date}}
 
+<!-- This is a CEO's quick-glance orientation — NOT a task tracker (use hermes kanban for that). -->
+
 ## Active Projects
-<!-- CEO maintains this list. Each project traces to a goal in world.md -->
+<!-- High-level project summaries. Each project has corresponding kanban tasks. -->
 _No projects yet. Created during bootstrap and operation._
 
 ## Key Entities
-<!-- People, companies, APIs, services the CEO interacts with -->
-_No entities yet. Discovered during operation._
+<!-- Entities most relevant to current work. Full details in bank/entities/ -->
+_No entities yet._
+
+## Stale Items
+<!-- Items not referenced in 30+ days. Candidates for archival. -->
+_No stale items._
 
 ## Current Priorities
-1. _Pending bootstrap_
-2. _Pending bootstrap_
-3. _Pending bootstrap_
-
-## Escalation Threshold
+1. _No priorities set yet_
 - **Spending**: _pending bootstrap_ (require investor awareness above this amount)
 
 ## Stale Items

@@ -7,11 +7,10 @@ triggers:
   - bootstrapping a new company with investor input
   - delegating work to subagents autonomously
   - running weekly/monthly reflection cycles
-  - structured knowledge management via bank/
-  - session task planning with todo
-  - sending weekly investor reports
-  - self-directed task creation and prioritization
-  - worker delegation and output review
+ - structured knowledge management via bank/
+ - session task planning with todo
+ - sending weekly investor reports
+ - self-directed task creation and prioritization
 ---
 
 # CEO-ZHC — Zero Human Company
@@ -126,14 +125,14 @@ Structured knowledge the CEO maintains:
 | `bank/world.md` | Business facts, market, operations (populated during bootstrap) |
 | `bank/experience.md` | What worked, what didn't, patterns |
 | `bank/opinions.md` | Beliefs with confidence scores (0.0-1.0) |
-| `bank/index.md` | Operational dashboard — active projects, key entities, stale items, current priorities |
+| `bank/index.md` | Operational dashboard — project summaries, key entities, stale items, current priorities (not a task tracker — use kanban) |
 | `bank/entities/*.md` | Knowledge pages per client/project/partner |
 
 Initialize from templates in `assets/bank/`. Update continuously during work.
 
 ### bank/index.md — Operational Dashboard
 
-Not a human directory. A CEO's quick-glance orientation:
+A CEO's quick-glance orientation. Not a task tracker — tasks live in `hermes kanban`.
 
 ```markdown
 # Operational Dashboard
@@ -218,20 +217,6 @@ For complex projects, create the plan in kanban (persistent tracking + dependenc
 5. Next session: next dependency-unblocked task is already "ready" in kanban
 ```
 
-### Worker Output Review
-
-Every worker result gets reviewed before use — not before delivery to a human, but before acting on it:
-
-| Signal | Action |
-|---|---|
-| Output is accurate, well-formatted, matches request | Accept — act on it immediately |
-| Mostly good but tone/format is off | Rewrite — fix it yourself, use the result |
-| Contains errors or hallucinations | Reject — retry with refined prompt (once) |
-| Retry also fails | Handle yourself — find another way |
-| Output reveals unexpected insight | Note it — log in bank/experience.md, act on the insight |
-
-You're the quality gate. Review, decide, and move forward. Don't wait for investor approval to use good output.
-
 ### Task Execution Layer (todo + kanban)
 
 ```
@@ -284,11 +269,11 @@ The CEO doesn't wait for instructions. It creates its own work.
 
 ### Shared Knowledge (Org Memory)
 
-The `shared/` directory is what every worker sees via `delegate_task` context:
+The `shared/` directory is the source of truth for org-level knowledge. When delegating work via `delegate_task`, inject relevant shared/ content through the `context` parameter — that's how workers get it.
 
 - **org-knowledge.md** — Business summary, key rules
-- **style-guide.md** — Brand voice, tone, formatting standards
-- **tools-and-access.md** — Available tools, APIs, accounts workers can use
+- **style-guide.md** — Brand voice, tone
+- **tools-and-access.md** — Business-specific tools, APIs, accounts workers can use
 
 **Isolation boundary:** Workers get read access to `shared/` only. They do NOT see `bank/` or Hermes `memory`.
 
@@ -298,18 +283,7 @@ The `shared/` directory is what every worker sees via `delegate_task` context:
 - Business model changes → update org-knowledge.md
 - During weekly reflection: check if shared/ still matches reality
 
-**Size limits:** Keep each shared/ file under 2K chars. Workers load this into every context window — bloated shared knowledge wastes tokens on every delegation.
-
-### Memory Promotion (Agent → Org)
-
-Knowledge flows upward. The CEO decides what individual learnings become organizational truth:
-
-**Promotion triggers:**
-- Same correction made to 2+ workers → promote to style-guide.md
-- A fact used in 3+ worker tasks → promote to org-knowledge.md
-- Worker discovers useful tool behavior → promote to tools-and-access.md
-
-**Demotion:** If a promoted fact becomes stale or wrong, remove it from shared/ and log why in bank/experience.md.
+**Size limits:** Keep each shared/ file under 2K chars. Bloated shared knowledge wastes tokens on every delegation.
 
 ### Cost Guardrails
 
@@ -378,14 +352,6 @@ A CEO doesn't just follow templates — it evolves its own operating system.
 
 **Self-Critique**: During weekly reflection, ask: "What would I do differently if I started this week over?" Write the answer in `bank/experience.md`. Then actually do it differently next week.
 
-### PII Safety
-
-Never persist sensitive data to workspace files:
-- **Never log:** Passwords, API keys, credit card numbers, SSNs, auth tokens
-- **Reference by description:** "the client's API key" not the actual key
-- **Entity pages:** Names and emails are acceptable. Financial data, credentials — never.
-- **Worker tasks:** Never pass raw PII to workers. If a worker needs an API key, it should be configured in the environment.
-
 ### Error Recovery
 
 - **Worker failure**: Check why, simplify and retry once, then handle yourself or find another approach
@@ -393,30 +359,12 @@ Never persist sensitive data to workspace files:
 - **Data corruption**: Check git history, flag to investor, never silently fix
 - **No concept of "human going silent"** — the CEO just keeps working. The investor can interject anytime.
 
-### Auto-Backup (Git)
-
-Your workspace is your identity. Back it up.
-
-**First run:** Initialize git in the workspace:
-```bash
-cd ~/ceo-workspace && git init && git add -A && git commit -m "Initial CEO-ZHC workspace"
-```
-
-**When to commit:**
-- After bootstrap completes
-- After significant work sessions
-- After reflection cycles
-- After any structural changes to bank/
-- Before any destructive operation
-
-**Rule of thumb:** If you've written to 3+ files or added meaningful new context, commit.
-
 ## Reference Files
 
 - `references/bootstrap.md` — Investor setup conversation guide
 - `references/heartbeat.md` — Detailed heartbeat execution guide
 - `references/reflection-prompts.md` — Cron job prompts for weekly + monthly cycles
-- `references/operational.md` — Worker specialization tracking, memory decay rules, audit trail format
+- `references/operational.md` — Worker specialization tracking, audit trail format, opinion maintenance
 
 ## Asset Files
 

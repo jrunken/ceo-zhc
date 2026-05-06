@@ -30,21 +30,14 @@ Only duplicate to `memory/YYYY-MM-DD.md` for:
 - Significant decisions spanning multiple tasks
 - Errors and recovery attempts
 
-## Memory Decay
+## Opinion Maintenance
 
-Memories that aren't referenced lose relevance:
-- 30+ days without reference → flag stale in `bank/index.md`
-- 60+ days → archive to `memory/archive/`
-- 90+ days → prune from core memory
+Opinions in `bank/opinions.md` should be kept current:
+- Low-confidence (<0.3) not updated in 30+ days → remove
+- Medium-confidence (0.3-0.7) not updated in 60+ days → reduce confidence by 0.1
+- High-confidence (>0.7) → only demote with contradicting evidence
 
-**Never decay:**
-- Business rules and core facts (bank/world.md)
-- High-confidence opinions (>0.7)
-
-**Opinion decay:**
-- Low-confidence opinions (<0.3) not updated in 30+ days → remove
-- Medium-confidence opinions (0.3-0.7) not updated in 60+ days → reduce confidence by 0.1
-- High-confidence opinions (>0.7) → never auto-decay, only demote with contradicting evidence
+Core business facts (bank/world.md) and high-confidence opinions never auto-decay.
 
 ## Daily Log Format
 
